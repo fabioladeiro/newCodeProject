@@ -42,3 +42,5 @@ hs_err_pid*
 /dist/
 /nbdist/
 /.nb-gradle/
+
+HELP.md
