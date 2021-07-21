@@ -23,28 +23,28 @@ public class Livro {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	@NotBlank
 	@Column(unique = true)
-	private String titulo;
+	protected String titulo;
 	@NotBlank
 	@Size(max = 500)
-	private String resumo;
+	protected String resumo;
 	@NotBlank
 	@Min(10)
-	private BigDecimal preco;
+	protected BigDecimal preco;
 	@NotBlank
-	private int numeroPaginas;
+	protected int numeroPaginas;
 	@NotBlank
 	@Column(unique = true)
-	private String isbn;
+	protected String isbn;
 	@NotBlank
-	private LocalDate dataPublicacao;
+	protected LocalDate dataPublicacao;
 	@NotBlank
 	@ManyToOne
-	private Categoria categoria;
+	protected Categoria categoria;
 	@ManyToOne
-	private Autor autor;
+	protected Autor autor;
 
 	public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotBlank @Min(10) BigDecimal preco,
 			@NotBlank int numeroPaginas, @NotBlank String isbn, @NotBlank LocalDate dataPublicacao,

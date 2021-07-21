@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.project.newCode.controller.form.AutorRequest;
@@ -23,11 +22,10 @@ public class AutorController {
 	private AutorRepository autorRepository;
 	
 	@PostMapping
-	@ResponseStatus(value = HttpStatus.CREATED)
 	public ResponseEntity<Autor> cadastrarAutor(@RequestBody @Valid AutorRequest request) {
 		Autor autor = request.toModel();
 		autorRepository.save(autor);
-		return ResponseEntity.ok(autor);
+		return ResponseEntity.status(HttpStatus.CREATED).body(autor);
 	}
 }
 	
