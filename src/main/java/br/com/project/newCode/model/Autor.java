@@ -28,18 +28,16 @@ public class Autor {
 	private String descricao;
 	private LocalDateTime dataRegistro = LocalDateTime.now();
 
-	public Autor(Long id, @NotBlank String nome, @NotBlank @Email String email,
-			@NotBlank @Size(max = 400) String descricao) {
-		this.id = id;
+	public Autor(@NotBlank String nome, @NotBlank @Email String email, @NotBlank @Size(max = 400) String descricao) {
 		this.nome = nome;
 		this.email = email;
 		this.descricao = descricao;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
@@ -74,6 +72,12 @@ public class Autor {
 
 	public void setDataRegistro(LocalDateTime dataRegistro) {
 		this.dataRegistro = dataRegistro;
+	}
+
+	@Override
+	public String toString() {
+		return "Autor [id=" + id + ", nome=" + nome + ", email=" + email + ", descricao=" + descricao
+				+ ", dataRegistro=" + dataRegistro + "]";
 	}
 
 }
