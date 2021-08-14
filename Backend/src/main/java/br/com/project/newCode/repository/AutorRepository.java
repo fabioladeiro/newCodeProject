@@ -6,4 +6,8 @@ import br.com.project.newCode.model.Autor;
 
 public interface AutorRepository extends JpaRepository<Autor, Long> {
 
+	Autor getByNome(String nome);
+
+	Autor getByEmail(String email);
+
 }

@@ -6,4 +6,5 @@ public interface CategoriaService {
 	
 	Categoria save(Categoria any);
 
+	Categoria getByNome(String nome);
 }

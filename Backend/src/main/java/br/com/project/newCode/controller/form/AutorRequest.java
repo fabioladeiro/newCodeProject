@@ -16,6 +16,8 @@ public class AutorRequest {
 	@NotBlank
 	@Size(max = 400)
 	private String descricao;
+	
+	public AutorRequest() {}
 
 	public AutorRequest(@NotBlank String nome, @NotBlank @Email String email,
 			@NotBlank @Size(max = 400) String descricao) {

@@ -12,7 +12,7 @@ public class CategoriaRequest {
 	public CategoriaRequest() {
 	}
 	
-	public CategoriaRequest(String nome) {
+	public CategoriaRequest(@NotBlank String nome) {
 		this.nome = nome;
 	}
 

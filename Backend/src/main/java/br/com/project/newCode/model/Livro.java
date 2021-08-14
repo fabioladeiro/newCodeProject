@@ -1,7 +1,6 @@
 package br.com.project.newCode.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -14,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -30,31 +30,33 @@ public class Livro {
 	@NotBlank
 	@Size(max = 500)
 	protected String resumo;
-	@NotBlank
+	@NotNull
 	@Min(10)
 	protected BigDecimal preco;
-	@NotBlank
+	@NotNull
 	protected int numeroPaginas;
 	@NotBlank
 	@Column(unique = true)
 	protected String isbn;
-	@NotBlank
-	protected LocalDate dataPublicacao;
-	@NotBlank
+//	@NotBlank
+//	protected LocalDate dataPublicacao;
 	@ManyToOne
 	protected Categoria categoria;
 	@ManyToOne
 	protected Autor autor;
 
-	public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotBlank @Min(10) BigDecimal preco,
-			@NotBlank int numeroPaginas, @NotBlank String isbn, @NotBlank LocalDate dataPublicacao,
-			@NotBlank Categoria categoria, Autor autor) {
+	@Deprecated
+	public Livro() {
+	}
+
+	public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotNull @Min(10) BigDecimal preco,
+			@NotNull int numeroPaginas, @NotBlank String isbn, Categoria categoria, Autor autor) {
 		this.titulo = titulo;
 		this.resumo = resumo;
 		this.preco = preco;
 		this.numeroPaginas = numeroPaginas;
 		this.isbn = isbn;
-		this.dataPublicacao = dataPublicacao;
+//		this.dataPublicacao = dataPublicacao;
 		this.categoria = categoria;
 		this.autor = autor;
 	}
@@ -107,13 +109,13 @@ public class Livro {
 		this.isbn = isbn;
 	}
 
-	public LocalDate getDataPublicacao() {
-		return dataPublicacao;
-	}
-
-	public void setDataPublicacao(LocalDate dataPublicacao) {
-		this.dataPublicacao = dataPublicacao;
-	}
+//	public LocalDate getDataPublicacao() {
+//		return dataPublicacao;
+//	}
+//
+//	public void setDataPublicacao(LocalDate dataPublicacao) {
+//		this.dataPublicacao = dataPublicacao;
+//	}
 
 	public Categoria getCategoria() {
 		return categoria;
@@ -129,6 +131,12 @@ public class Livro {
 
 	public void setAutor(Autor autor) {
 		this.autor = autor;
+	}
+
+	@Override
+	public String toString() {
+		return "Livro [id=" + id + ", titulo=" + titulo + ", resumo=" + resumo + ", preco=" + preco + ", numeroPaginas="
+				+ numeroPaginas + ", isbn=" + isbn + ", categoria=" + categoria + ", autor=" + autor + "]";
 	}
 
 }

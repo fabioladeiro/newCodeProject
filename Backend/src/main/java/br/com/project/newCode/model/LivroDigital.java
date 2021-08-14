@@ -1,11 +1,11 @@
 package br.com.project.newCode.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -13,12 +13,15 @@ public class LivroDigital extends Livro {
 
 	@NotBlank
 	private String dispositivo;
+	
+	@Deprecated
+	public LivroDigital() {}
 
 	public LivroDigital(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo,
-			@NotBlank @Min(10) BigDecimal preco, @NotBlank int numeroPaginas, @NotBlank String isbn,
-			@NotBlank LocalDate dataPublicacao, @NotBlank Categoria categoria, Autor autor,
+			@NotNull @Min(10) BigDecimal preco, @NotNull int numeroPaginas, @NotBlank String isbn,
+			Categoria categoria, Autor autor,
 			@NotBlank String dispositivo) {
-		super(titulo, resumo, preco, numeroPaginas, isbn, dataPublicacao, categoria, autor);
+		super(titulo, resumo, preco, numeroPaginas, isbn, categoria, autor);
 		this.dispositivo = dispositivo;
 	}
 
@@ -29,5 +32,10 @@ public class LivroDigital extends Livro {
 	public void setDispositivo(String dispositivo) {
 		this.dispositivo = dispositivo;
 	}
+
+	@Override
+	public String toString() {
+		return "LivroDigital [dispositivo=" + dispositivo + "]";
+	}  
 
 }

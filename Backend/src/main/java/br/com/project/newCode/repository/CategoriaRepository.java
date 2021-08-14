@@ -6,4 +6,6 @@ import br.com.project.newCode.model.Categoria;
 
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
+	Categoria getByNome(String nome);
+
 }

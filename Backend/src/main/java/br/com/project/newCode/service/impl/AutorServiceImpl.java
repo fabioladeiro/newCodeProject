@@ -16,8 +16,16 @@ public class AutorServiceImpl implements AutorService {
 	}
 
 	@Override
-	public Autor save(Autor autor) {
-		return repository.save(autor);
+	public Autor save(Autor autor){
+		if(getByEmail(autor.getEmail()) != null) {
+			return null;
+		}
+		return repository.save(autor);			
+	}
+	
+	@Override
+	public Autor getByEmail(String email) {
+		return repository.getByEmail(email);
 	}
 
 }

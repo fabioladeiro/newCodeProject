@@ -1,41 +1,47 @@
 package br.com.project.newCode.controller.form;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.project.newCode.model.Autor;
 import br.com.project.newCode.model.Categoria;
+import br.com.project.newCode.model.LivroDigital;
+import br.com.project.newCode.model.LivroFisico;
 
 public class LivroRequest {
 
 	@NotBlank
-	protected String titulo;
+	private String titulo;
 	@NotBlank
 	@Size(max = 500)
-	protected String resumo;
-	@NotBlank
+	private String resumo;
+	@NotNull
 	@Min(10)
-	protected BigDecimal preco;
+	private BigDecimal preco;
+	@NotNull
+	private int numeroPaginas;
 	@NotBlank
-	protected int numeroPaginas;
+	private String isbn;
+//	@NotBlank
+//	private LocalDate dataPublicacao;
 	@NotBlank
-	protected String isbn;
+	private String categoria;
 	@NotBlank
-	protected LocalDate dataPublicacao;
-	@NotBlank
-	protected Categoria categoria;
-	@NotBlank
-	protected Autor autor;
+	@Email
+	private String emailAutor;
 	private String dispositivo;
 	private String tipoEntrega;
+	
+	public LivroRequest() {}
 
 	public LivroRequest(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo,
-			@NotBlank @Min(10) BigDecimal preco, @NotBlank int numeroPaginas, @NotBlank String isbn,
-			@NotBlank LocalDate dataPublicacao, @NotBlank Categoria categoria, @NotBlank Autor autor,
+			@NotNull @Min(10) BigDecimal preco, @NotNull int numeroPaginas, @NotBlank String isbn,
+			@NotBlank String categoria, @NotBlank String emailAutor,
 			String dispositivo, String tipoEntrega) {
 		super();
 		this.titulo = titulo;
@@ -43,9 +49,8 @@ public class LivroRequest {
 		this.preco = preco;
 		this.numeroPaginas = numeroPaginas;
 		this.isbn = isbn;
-		this.dataPublicacao = dataPublicacao;
 		this.categoria = categoria;
-		this.autor = autor;
+		this.emailAutor = emailAutor;
 		this.dispositivo = dispositivo;
 		this.tipoEntrega = tipoEntrega;
 	}
@@ -89,29 +94,29 @@ public class LivroRequest {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
+//
+//	public LocalDate getDataPublicacao() {
+//		return dataPublicacao;
+//	}
+//
+//	public void setDataPublicacao(LocalDate dataPublicacao) {
+//		this.dataPublicacao = dataPublicacao;
+//	}
 
-	public LocalDate getDataPublicacao() {
-		return dataPublicacao;
-	}
-
-	public void setDataPublicacao(LocalDate dataPublicacao) {
-		this.dataPublicacao = dataPublicacao;
-	}
-
-	public Categoria getCategoria() {
+	public String getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
 
-	public Autor getAutor() {
-		return autor;
+	public String getAutor() {
+		return emailAutor;
 	}
 
-	public void setAutor(Autor autor) {
-		this.autor = autor;
+	public void setAutor(String autor) {
+		this.emailAutor = autor;
 	}
 
 	public String getDispositivo() {
@@ -128,6 +133,18 @@ public class LivroRequest {
 
 	public void setTipoEntrega(String tipoEntrega) {
 		this.tipoEntrega = tipoEntrega;
+	}
+	
+	public LivroFisico toModelLivroFisico(Categoria categoriaEncontradaPeloNome, Autor autorEncontradoPeloNome) {
+		return new LivroFisico(this.getTitulo(), this.getResumo(), this.getPreco(),
+				this.getNumeroPaginas(), this.getIsbn(), categoriaEncontradaPeloNome, autorEncontradoPeloNome,
+				this.getTipoEntrega());
+	}
+	
+	public LivroDigital toModelLivroDigital(Categoria categoriaEncontradaPeloNome, Autor autorEncontradoPeloNome) {
+		return new LivroDigital(this.getTitulo(), this.getResumo(), this.getPreco(),
+				this.getNumeroPaginas(), this.getIsbn(), categoriaEncontradaPeloNome, autorEncontradoPeloNome,
+				this.getDispositivo());
 	}
 
 }

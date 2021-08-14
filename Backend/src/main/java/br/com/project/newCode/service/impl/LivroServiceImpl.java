@@ -1,5 +1,6 @@
 package br.com.project.newCode.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -20,18 +21,21 @@ public class LivroServiceImpl implements LivroService {
 
 	@Override
 	public Livro save(Livro livro) {
+		if(getByIsbn(livro.getIsbn()) != null || getByTitulo(livro.getTitulo()) != null) {
+			return null;
+		}
 		return repository.save(livro);
 	}
 
 	@Override
 	public Optional<Livro> getById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.findById(id);
+		
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+		repository.deleteById(id);
 		
 	}
 
@@ -39,6 +43,24 @@ public class LivroServiceImpl implements LivroService {
 	public Livro update(Livro entity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public Livro getByIsbn(String isbn) {
+		return repository.getByIsbn(isbn);
+	}
+
+
+	@Override
+	public Livro getByTitulo(String titulo) {
+		return repository.getByTitulo(titulo);
+	}
+
+
+	@Override
+	public List<Livro> findAll() {
+		return repository.findAll();
 	}
 
 }
