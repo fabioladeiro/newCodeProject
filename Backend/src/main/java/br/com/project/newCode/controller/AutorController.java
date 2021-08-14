@@ -2,32 +2,38 @@ package br.com.project.newCode.controller;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.project.newCode.controller.form.AutorRequest;
 import br.com.project.newCode.model.Autor;
-import br.com.project.newCode.repository.AutorRepository;
+import br.com.project.newCode.service.AutorService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/autores")
 public class AutorController {
 
-	@Autowired
-	private AutorRepository autorRepository;
+	private AutorService service;
+	private ModelMapper mapper;
+	
+	public AutorController(AutorService service, ModelMapper mapper) {
+		this.service = service;
+		this.mapper = mapper;
+	}
 	
 	@PostMapping
-	public ResponseEntity<Autor> cadastrarAutor(@RequestBody @Valid AutorRequest request) {
-		Autor autor = request.toModel();
-		autorRepository.save(autor);
-		return ResponseEntity.status(HttpStatus.CREATED).body(autor);
+	@ResponseStatus(HttpStatus.CREATED)
+	public AutorRequest cadastrarAutor(@RequestBody @Valid AutorRequest request) {
+		Autor entity = mapper.map(request, Autor.class);
+		Autor saved = service.save(entity);
+		return mapper.map(saved, AutorRequest.class);
 	}
 }
 	
