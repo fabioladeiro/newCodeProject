@@ -36,6 +36,13 @@ public class Autor {
 		this.email = email;
 		this.descricao = descricao;
 	}
+	
+	public Autor(Long id, @NotBlank String nome, @NotBlank @Email String email, @NotBlank @Size(max = 400) String descricao) {
+		this.nome = nome;
+		this.email = email;
+		this.descricao = descricao;
+		this.id = id;
+	}
 
 	public Long getId() {
 		return id;
