@@ -1,6 +1,7 @@
 package br.com.project.newCode.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -38,8 +39,8 @@ public class Livro {
 	@NotBlank
 	@Column(unique = true)
 	protected String isbn;
-//	@NotBlank
-//	protected LocalDate dataPublicacao;
+	@NotBlank
+	protected LocalDate dataPublicacao;
 	@ManyToOne
 	protected Categoria categoria;
 	@ManyToOne
@@ -50,13 +51,13 @@ public class Livro {
 	}
 
 	public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, @NotNull @Min(10) BigDecimal preco,
-			@NotNull int numeroPaginas, @NotBlank String isbn, Categoria categoria, Autor autor) {
+			@NotNull int numeroPaginas, @NotBlank String isbn, @NotBlank LocalDate dataPublicacao, Categoria categoria, Autor autor) {
 		this.titulo = titulo;
 		this.resumo = resumo;
 		this.preco = preco;
 		this.numeroPaginas = numeroPaginas;
 		this.isbn = isbn;
-//		this.dataPublicacao = dataPublicacao;
+		this.dataPublicacao = dataPublicacao;
 		this.categoria = categoria;
 		this.autor = autor;
 	}
@@ -109,13 +110,13 @@ public class Livro {
 		this.isbn = isbn;
 	}
 
-//	public LocalDate getDataPublicacao() {
-//		return dataPublicacao;
-//	}
-//
-//	public void setDataPublicacao(LocalDate dataPublicacao) {
-//		this.dataPublicacao = dataPublicacao;
-//	}
+	public LocalDate getDataPublicacao() {
+		return dataPublicacao;
+	}
+
+	public void setDataPublicacao(LocalDate dataPublicacao) {
+		this.dataPublicacao = dataPublicacao;
+	}
 
 	public Categoria getCategoria() {
 		return categoria;

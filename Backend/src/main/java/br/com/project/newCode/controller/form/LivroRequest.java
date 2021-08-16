@@ -1,6 +1,8 @@
 package br.com.project.newCode.controller.form;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -27,8 +29,8 @@ public class LivroRequest {
 	private int numeroPaginas;
 	@NotBlank
 	private String isbn;
-//	@NotBlank
-//	private LocalDate dataPublicacao;
+	@NotBlank
+	private String dataPublicacao;
 	@NotBlank
 	private String categoria;
 	@NotBlank
@@ -36,12 +38,13 @@ public class LivroRequest {
 	private String emailAutor;
 	private String dispositivo;
 	private String tipoEntrega;
-	
-	public LivroRequest() {}
+
+	public LivroRequest() {
+	}
 
 	public LivroRequest(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo,
 			@NotNull @Min(10) BigDecimal preco, @NotNull int numeroPaginas, @NotBlank String isbn,
-			@NotBlank String categoria, @NotBlank String emailAutor,
+			@NotBlank String dataPublicacao, @NotBlank String categoria, @NotBlank String emailAutor,
 			String dispositivo, String tipoEntrega) {
 		super();
 		this.titulo = titulo;
@@ -53,6 +56,12 @@ public class LivroRequest {
 		this.emailAutor = emailAutor;
 		this.dispositivo = dispositivo;
 		this.tipoEntrega = tipoEntrega;
+		this.dataPublicacao = dataPublicacao;
+	}
+
+	public LocalDate converterData(String data) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return LocalDate.parse(data, formatter);
 	}
 
 	public String getTitulo() {
@@ -94,14 +103,14 @@ public class LivroRequest {
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-//
-//	public LocalDate getDataPublicacao() {
-//		return dataPublicacao;
-//	}
-//
-//	public void setDataPublicacao(LocalDate dataPublicacao) {
-//		this.dataPublicacao = dataPublicacao;
-//	}
+
+	public String getDataPublicacao() {
+		return dataPublicacao;
+	}
+
+	public void setDataPublicacao(String dataPublicacao) {
+		this.dataPublicacao = dataPublicacao;
+	}
 
 	public String getCategoria() {
 		return categoria;
@@ -134,16 +143,19 @@ public class LivroRequest {
 	public void setTipoEntrega(String tipoEntrega) {
 		this.tipoEntrega = tipoEntrega;
 	}
-	
+
 	public LivroFisico toModelLivroFisico(Categoria categoriaEncontradaPeloNome, Autor autorEncontradoPeloNome) {
-		return new LivroFisico(this.getTitulo(), this.getResumo(), this.getPreco(),
-				this.getNumeroPaginas(), this.getIsbn(), categoriaEncontradaPeloNome, autorEncontradoPeloNome,
+		LocalDate dataPublicacaoConvertida = converterData(this.dataPublicacao);
+
+		return new LivroFisico(this.getTitulo(), this.getResumo(), this.getPreco(), this.getNumeroPaginas(),
+				this.getIsbn(), dataPublicacaoConvertida, categoriaEncontradaPeloNome, autorEncontradoPeloNome,
 				this.getTipoEntrega());
 	}
-	
+
 	public LivroDigital toModelLivroDigital(Categoria categoriaEncontradaPeloNome, Autor autorEncontradoPeloNome) {
-		return new LivroDigital(this.getTitulo(), this.getResumo(), this.getPreco(),
-				this.getNumeroPaginas(), this.getIsbn(), categoriaEncontradaPeloNome, autorEncontradoPeloNome,
+		LocalDate dataPublicacaoConvertida = converterData(this.dataPublicacao);
+		return new LivroDigital(this.getTitulo(), this.getResumo(), this.getPreco(), this.getNumeroPaginas(),
+				this.getIsbn(), dataPublicacaoConvertida, categoriaEncontradaPeloNome, autorEncontradoPeloNome,
 				this.getDispositivo());
 	}
 
